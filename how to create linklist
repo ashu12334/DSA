@@ -1,0 +1,97 @@
+
+#include<iostream>
+#include<vector>
+using namespace std;
+class node {
+public:int data;
+    node *next;
+    
+    node(int d){
+      this->data = d;
+      this->next = NULL;
+    
+    }
+    ~node() {
+      int value = this->data;
+      if(this->next!=NULL){
+        delete next;
+        this->next = NULL;
+      }
+    }
+   
+};
+node* build(node* &root){
+  int val;
+  cin>>val;
+  root = new node(val);
+  if(val == -1)
+  return NULL;
+  cout<<"Enter next value  "<<endl;
+  root->next = build(root->next);
+  return root;
+}
+
+void insertAtb(node* &root){
+ 
+  int val;
+  cout<<"insert at begin ";
+  cin>>val;
+  node* temp = new node(val);
+    temp->next = root;
+    root= temp;
+
+}
+void insertAte(node* &root){
+   int val;
+  cout<<"insert at end ";
+  cin>>val;
+  node* last = new node(val);
+  
+  while(root->next!=NULL){
+    cout<<root->data<<" ";
+    root = root->next;
+  }
+  root->next = last;
+
+}
+void deleteAtL(node* &root){
+  cout<<"Enter which node you want to delete ";
+  int loc;
+  cin>>loc;
+  node* curr = root;
+  node* prev = NULL;
+  if(loc == 1){
+     node* temp = root;
+     root = root->next;
+     free(temp);
+  } else {
+       for(int i=1;i<=loc-1;i++){
+    prev = curr;
+    curr = curr->next;
+  }
+  prev->next = curr->next;
+  }
+ 
+}
+void show(node *root)
+{
+  node *temp = root;
+  while(temp!=NULL){
+    cout<<temp->data<<" ";
+    temp = temp->next;
+  }
+}
+int main()
+{
+ // int val;
+ // cin>>val;
+  //node* root = new node(val);
+   node* root  = NULL;
+   build(root);
+   show(root);
+  //insertAtb(root);
+ // insertAte(root);
+  deleteAtL(root);
+  show(root);
+    return 0;
+}
